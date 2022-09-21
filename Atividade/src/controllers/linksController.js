@@ -51,4 +51,34 @@ module.exports = {
         }
         res.json(json);
     },
+    alterar: async (req, res)=>{
+        let json = {error:'', result:{}};
+        
+        let codigo = req.params.codigo;
+        let nomeDoSite = req.body.nomeDoSite;
+        let primeiroNomeAutor = req.body.primeiroNomeAutor;
+        let segundoNomeAutor = req.body.segundoNomeAutor;
+        let dataPublicacao = req.body.dataPublicacao;
+        let linkDoSite = req.body.linkDoSite;
+
+        if(codigo && nomeDoSite && primeiroNomeAutor && segundoNomeAutor && dataPublicacao && linkDoSite){
+            await LinksService.alterar(codigo, nomeDoSite, primeiroNomeAutor, segundoNomeAutor, dataPublicacao, linkDoSite);
+            json.result = {
+                codigo,
+                nomeDoSite, 
+                primeiroNomeAutor, 
+                segundoNomeAutor, 
+                dataPublicacao, 
+                linkDoSite
+            };
+        }else{
+            json.error = 'Campos não enviados!';
+        }
+        res.json(json);
+    },
+    excluir: async(req, res) => {
+        let json = {error:'', result:{}};
+        await LinksService.excluir(req.params.codigo);
+        res.json(json);
+    }
 }

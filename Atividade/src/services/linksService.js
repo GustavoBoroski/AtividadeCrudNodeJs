@@ -31,5 +31,24 @@ module.exports = {
                     aceito(results.insertCodigo);
             }); 
         });
+    },
+
+    alterar: (codigo, nomeDoSite, primeiroNomeAutor, segundoNomeAutor, dataPublicacao, linkDoSite) => {
+        return new Promise((aceito, rejeitado)=>{
+            db.query('UPDATE links SET nomeDoSite = ?, primeiroNomeAutor = ?, segundoNomeAutor = ?, dataPublicacao = ?, linkDoSite = ? WHERE codigo = ?', 
+                [nomeDoSite, primeiroNomeAutor, segundoNomeAutor, dataPublicacao, linkDoSite, codigo], (error, results)=>{ 
+                    if(error) {rejeitado(error); return;}
+                    aceito(results);
+            }); 
+        });
+    },
+
+    excluir: (codigo) =>{
+        return new Promise((aceito, rejeitado)=>{
+            db.query('DELETE FROM links WHERE codigo = ?', [codigo], (error, results)=>{
+                if(error) {rejeitado(error); return;}
+                aceito(results);
+            });
+        });
     }
 };
